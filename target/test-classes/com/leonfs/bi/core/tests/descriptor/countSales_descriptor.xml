@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<bi name="sales" label="Cantidad de ventas" privilege="general" formatter="com.project.frba.bifront.client.model.format.UnitFormatter">
+	<facttable table="sale" metric="count(*)" type="long">
+		<joins>
+			<join name="sl" table="saleline">
+				<condition column="sale" factColumn="facttable.id"/>
+			</join>
+			<join name="pr" table="product">
+				<condition column="id" factColumn="sl.product"/>
+			</join>
+			<join name="pc" table="productcategory" >
+				<condition column="id" factColumn="pr.category"/>
+			</join>
+			<join name="st" table="store" >
+				<condition column="id" factColumn="facttable.store"/>
+			</join>
+		</joins>
+		<dimensions>
+			<dimension name="product" >
+				<property name="productname" table="product" column="name" label="Name of the product" />
+				<property name="productcategoryname" table="productcategory" column="name" label="Category of the product" default="col"/>
+			</dimension>
+			
+			<dimension name="store">	
+				<property name="storename" table="store" column="name" label="Store name"/>
+			</dimension>
+		
+			<dimension name="time">
+				<property name="saleyear" table="facttable" column="saledate" function="YEAR" type="integer" label="Año" default="row"/>
+				<property name="salequarter" table="facttable" column="saledate" function="QUARTER" type="integer" label="Trimestre"/>
+				<property name="salemonth" table="facttable" column="saledate" function="MONTH" type="integer" label="Mes"/>
+			</dimension>
+		</dimensions>
+	</facttable>
+</bi>
