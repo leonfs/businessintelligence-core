@@ -1,6 +1,6 @@
 package com.leonfs.bi.core.descriptor;
 
-import com.leonfs.bi.utils.BiUtil;
+import com.leonfs.bi.core.descriptor.types.PropertyType;
 
 public class Property {
 	
@@ -10,7 +10,7 @@ public class Property {
 	private String function;
 	private String label;
 	private String defaultValue;
-	private Class<?> type;
+	private PropertyType type;
 	private Dimension dimension;
 		
 	public Property(String name){
@@ -62,17 +62,17 @@ public class Property {
 		this.dimension = dimension;
 	}
 
-	public Class<?> getType() {
+	public PropertyType getPropertyType() {
 		return type;
 	}
 	
 	
-	public void setType(Class<?> type) {
+	public void setPropertyType(PropertyType type) {
 		this.type = type;
 	}
 	
-	public void setType(String typeName){
-		this.setType(BiUtil.getPropertyType(typeName));
+	public void setPropertyType(String typeName){
+		this.setPropertyType(PropertyType.valueOf(typeName));
 	}
 	
 	public void setLabel(String label){

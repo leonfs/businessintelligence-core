@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.leonfs.bi.core.descriptor.types.PropertyType;
+
 public class Dimension {
 
 	private String name;
@@ -58,8 +60,8 @@ public class Dimension {
 		return tables;
 	}
 
-	public Class<?> getPropertyType(String propertyName) {
-		return getPropertyByName(propertyName).getType();
+	public PropertyType getPropertyType(String propertyName) {
+		return getPropertyByName(propertyName).getPropertyType();
 	}
 
 	public void addProperty(Property property) {

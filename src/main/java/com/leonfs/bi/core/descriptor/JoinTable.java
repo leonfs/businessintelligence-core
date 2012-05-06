@@ -35,7 +35,7 @@ public class JoinTable {
 		return descriptor;
 	}
 
-	public void setDescriptor(XMLDatabaseDescriptor descriptor) {
+	public void setDescriptor(XmlDatabaseDescriptor descriptor) {
 		this.descriptor = descriptor;
 	}
 	

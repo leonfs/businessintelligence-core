@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.leonfs.bi.core.descriptor.builder.XMLDatabaseDescriptorBuilder;
+import com.leonfs.bi.core.descriptor.builder.XmlDatabaseDescriptorBuilder;
 import com.leonfs.bi.core.exceptions.NoSuchDirectoryException;
 import com.leonfs.bi.utils.BiUtil;
 
@@ -38,7 +38,7 @@ public class DescriptorsLoader {
 		descriptors = new HashMap<String, IDescriptor>();
 		
 		for(int i=0; i < fileDescriptors.length; i++){
-			XMLDatabaseDescriptorBuilder descriptorBuilder = new XMLDatabaseDescriptorBuilder(fileDescriptors[i]);
+			XmlDatabaseDescriptorBuilder descriptorBuilder = new XmlDatabaseDescriptorBuilder(fileDescriptors[i]);
 			descriptorBuilder.buildFactTable()
 						.buildJoinTables()
 						.buildDimensions()

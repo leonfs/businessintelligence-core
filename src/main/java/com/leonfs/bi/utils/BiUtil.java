@@ -10,43 +10,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class BiUtil {
 	
-	private static Map<String, Class<?>> propertyTypes = new HashMap<String, Class<?>>();
-	private static Map<String, Class<? extends Number>> metricTypes = new HashMap<String, Class<? extends Number>>();
 	private static Map<Class<?>, String> databaseTypes = new HashMap<Class<?>, String>();
 	private static Properties biConfigurationProperties = null;
 	private static ApplicationContext context = null;
 	//private static ETLExecutor executor = null;
 	
 	
-	static {
-		/*************** Property Types*********************/
-		propertyTypes.put("integer", Integer.class);
-		propertyTypes.put("long", Long.class);
-		propertyTypes.put("string", String.class);
-		propertyTypes.put("double", Double.class);
-		
-		/*************** Metric Types*********************/
-		metricTypes.put("integer", Integer.class);
-		metricTypes.put("long", Long.class);
-		metricTypes.put("double", Double.class);
-		
-		
+	static {	
 		/*************** Database Types *********************/
 		databaseTypes.put(String.class, "VARCHAR(255)");
 		databaseTypes.put(Integer.class, "INTEGER");
 		databaseTypes.put(Long.class, "BIGINT(20)");
 	}
 	
-	public static Class<?> getPropertyType(String type){
-		return propertyTypes.get(type);
-	}
 	
 	public static String getDatabaseType(Class clazz){
 		return databaseTypes.get(clazz);
-	}
-	
-	public static Class<? extends Number> getMetricType(String metricType){
-		return metricTypes.get(metricType);
 	}
 	
 	

@@ -16,6 +16,7 @@ import org.junit.Test;
 import com.leonfs.bi.core.descriptor.Dimension;
 import com.leonfs.bi.core.descriptor.IDescriptor;
 import com.leonfs.bi.core.descriptor.Property;
+import com.leonfs.bi.core.descriptor.types.PropertyType;
 
 public class DimensionTest {
 
@@ -76,10 +77,14 @@ public class DimensionTest {
 	public void getPropertyType_NameProperty_StringClass() {
 		new Expectations() {
 			{
-				name.getType(); result = String.class;
+				name.getPropertyType(); result = PropertyType.STRING;
 			}
 		};
-		assertEquals(String.class, product.getPropertyType("productname"));
+		
+		PropertyType expected = PropertyType.STRING;
+		PropertyType actual = product.getPropertyType("productname");
+		assertNotNull(actual);
+		assertEquals(expected, actual);
 	}
 	
 	@Test

@@ -2,6 +2,8 @@ package com.leonfs.bi.core.descriptor;
 
 import java.util.Collection;
 
+import com.leonfs.bi.core.descriptor.types.MetricType;
+
 
 public interface IDescriptor {
 	
@@ -23,7 +25,7 @@ public interface IDescriptor {
 	
 	public String getMetric();
 	
-	public Class<? extends Number> getMetricType();
+	public MetricType getMetricType();
 	
 	public Collection<Property> getHorizontalDefaultProperties();
 	

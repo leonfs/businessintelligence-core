@@ -6,9 +6,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.w3c.dom.Document;
 
-public class XMLDatabaseDescriptor implements IDescriptor {
+import com.leonfs.bi.core.descriptor.types.MetricType;
+
+public class XmlDatabaseDescriptor implements IDescriptor {
 	
 	private String descriptorName;
 	private String metric;
@@ -18,14 +21,14 @@ public class XMLDatabaseDescriptor implements IDescriptor {
 	private Map<String, Dimension> dimensions = new LinkedHashMap<String, Dimension>();
 	
 	private String label;
-	private Class<? extends Number> metricType;
+	private MetricType metricType;
 	private String privilege;
 	private String formatterClassName = null;
 	private Integer currencyType = null;
 	
 	private Document xmlDescriptorDocument;
 	
-	public XMLDatabaseDescriptor() {
+	public XmlDatabaseDescriptor() {
 	
 	}
 	
@@ -39,6 +42,10 @@ public class XMLDatabaseDescriptor implements IDescriptor {
 
 	public Collection<Dimension> getDimensions() {
 		return this.dimensions.values();
+	}
+	
+	public Integer getDimensionsCount() {
+		return this.dimensions.size();
 	}
 
 	public String getFacttable() {
@@ -89,11 +96,11 @@ public class XMLDatabaseDescriptor implements IDescriptor {
 		this.metric = metric;
 	}
 	
-	public Class<? extends Number> getMetricType(){
+	public MetricType getMetricType(){
 		return metricType;
 	}
 	
-	public void setMetricType(Class<? extends Number> metricType){
+	public void setMetricType(MetricType metricType){
 		this.metricType = metricType;
 	}
 
@@ -116,6 +123,9 @@ public class XMLDatabaseDescriptor implements IDescriptor {
 	}
 
 	public void addDimension(Dimension dimension) {
+		if (this.dimensions.containsKey(dimension.getName())) {
+			throw new DuplicateKeyException("Dimension with name: " + dimension.getName() + " has been already added.");
+		}
 		this.dimensions.put(dimension.getName(), dimension);
 		dimension.setDescriptor(this);
 	}

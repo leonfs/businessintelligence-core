@@ -30,7 +30,7 @@ public class OlapRowMapper implements RowMapper<IOlapDataRow> {
 			String propertyName = resultSet.getMetaData().getColumnLabel(i);
 			Property property = descriptor.getPropertyByName(propertyName);
 			Object obj = resultSet.getObject(i);
-			String resultValue = property.getType().cast(obj).toString();
+			String resultValue = property.getPropertyType().getType().cast(obj).toString();
 			dataRow.addPropertyValue(propertyName, resultValue);
 		}
 		

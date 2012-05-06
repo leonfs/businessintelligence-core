@@ -19,26 +19,27 @@ import com.leonfs.bi.core.descriptor.IDescriptor;
 import com.leonfs.bi.core.descriptor.JoinCondition;
 import com.leonfs.bi.core.descriptor.JoinTable;
 import com.leonfs.bi.core.descriptor.Property;
-import com.leonfs.bi.core.descriptor.XMLDatabaseDescriptor;
+import com.leonfs.bi.core.descriptor.XmlDatabaseDescriptor;
+import com.leonfs.bi.core.descriptor.types.MetricType;
 import com.leonfs.bi.utils.BiUtil;
 import com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl;
 import com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl;
 
-public class XMLDatabaseDescriptorBuilder implements IDescriptorBuilder {
+public class XmlDatabaseDescriptorBuilder implements IDescriptorBuilder {
 	
 	Document document = null;
-	XMLDatabaseDescriptor descriptor;
+	XmlDatabaseDescriptor descriptor;
 	
 	private static String DESCRIPTOR_XPATH = "/bi";
 	private static String FACTTABLE_XPATH = "/bi/facttable";
 	private static String JOINS_XPATH = "/bi/facttable/joins";
 	private static String DIMENSIONS_XPATH = "/bi/facttable/dimensions";
 	
-	public XMLDatabaseDescriptorBuilder(String filePath) {
+	public XmlDatabaseDescriptorBuilder(String filePath) {
 		load(new File(filePath));
 	}
 	
-	public XMLDatabaseDescriptorBuilder(File file) {
+	public XmlDatabaseDescriptorBuilder(File file) {
 		load(file);
 	}
 
@@ -51,7 +52,7 @@ public class XMLDatabaseDescriptorBuilder implements IDescriptorBuilder {
 		
 		try {
 			document = dFactory.newDocumentBuilder().parse(file);
-			descriptor = new XMLDatabaseDescriptor();
+			descriptor = new XmlDatabaseDescriptor();
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -93,7 +94,8 @@ public class XMLDatabaseDescriptorBuilder implements IDescriptorBuilder {
 		NamedNodeMap facttableAttributes = facttableNode.getAttributes();
 		descriptor.setFacttable(facttableAttributes.getNamedItem("table").getNodeValue());
 		descriptor.setMetric(facttableAttributes.getNamedItem("metric").getNodeValue());
-		descriptor.setMetricType(BiUtil.getMetricType(facttableAttributes.getNamedItem("type").getNodeValue()));
+		String typeName = facttableAttributes.getNamedItem("type").getNodeValue();
+		descriptor.setMetricType(MetricType.valueOf(typeName));
 		
 		if(facttableAttributes.getNamedItem("formatter")!=null){
 			descriptor.setFormatterClassName(facttableAttributes.getNamedItem("formatter").getNodeValue());
@@ -149,7 +151,7 @@ public class XMLDatabaseDescriptorBuilder implements IDescriptorBuilder {
 				attributes.getNamedItem("function").getNodeValue() : null);
 		String type = attributes.getNamedItem("type") != null ? 
 				attributes.getNamedItem("type").getNodeValue() : "string";
-				property.setType(type);	
+				property.setPropertyType(type);	
 				property.setLabel(attributes.getNamedItem("label") != null ? attributes.getNamedItem("label").getNodeValue() : "noText");
 				property.setDefaultValue(attributes.getNamedItem("default") != null ? attributes.getNamedItem("default").getNodeValue() : null);
 	}
@@ -168,7 +170,7 @@ public class XMLDatabaseDescriptorBuilder implements IDescriptorBuilder {
 				joinTable.addJoinCondition(joinCondition);
 			}
 		}
-		((XMLDatabaseDescriptor)joinTable.getDescriptor()).addJoin(joinTable);
+		((XmlDatabaseDescriptor)joinTable.getDescriptor()).addJoin(joinTable);
 	}
 	
 	public void loadDimension(Dimension dimension) throws XPathExpressionException {
