@@ -1,5 +1,6 @@
 package com.leonfs.bi.core.tests.descriptor;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import mockit.Expectations;
@@ -63,6 +64,31 @@ public class XmlDatabaseDescriptorTest {
 		
 		Integer expectedCount = 2;
 		assertEquals(expectedCount, descriptor.getDimensionsCount());
+	}
+	
+	@Test
+	public void getDimensionByName_NonExistentDimensionForGivenName_Null() {
+		descriptor.addDimension(productDimension);
+		
+		Dimension actualDimension = descriptor.getDimensionByName("NonExistenDimensionName");
+		assertNull(actualDimension);
+	}
+	
+	@Test
+	public void getDimensionByName_DescriptorWithoutDimensions_Null() {
+		Dimension actualDimension = descriptor.getDimensionByName("NonExistenDimensionName");
+		assertNull(actualDimension);
+	}
+	
+	@Test
+	public void getDimensionByName_ExistenProductDimension_ProductDimension() {
+		descriptor.addDimension(productDimension);
+		
+		String productDimensionName = "productDimension";
+		Dimension actualDimension = descriptor.getDimensionByName(productDimensionName);
+		
+		assertNotNull(actualDimension);
+		assertEquals(productDimension, actualDimension);
 	}
 	
 	
