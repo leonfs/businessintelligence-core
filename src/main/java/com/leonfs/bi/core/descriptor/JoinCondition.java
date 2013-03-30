@@ -28,5 +28,7 @@ public class JoinCondition {
 		return this.column +" | "+ this.factColumn;
 	}
 	
+	//This is a sample text to test STS integration with GIT
+	
 
 }

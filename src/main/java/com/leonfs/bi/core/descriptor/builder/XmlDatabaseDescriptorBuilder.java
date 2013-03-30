@@ -21,7 +21,6 @@ import com.leonfs.bi.core.descriptor.JoinTable;
 import com.leonfs.bi.core.descriptor.Property;
 import com.leonfs.bi.core.descriptor.XmlDatabaseDescriptor;
 import com.leonfs.bi.core.descriptor.types.MetricType;
-import com.leonfs.bi.utils.BiUtil;
 import com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl;
 import com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl;
 
